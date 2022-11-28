@@ -7,5 +7,6 @@ username        = ""
 user_score      = 0
 # tableau des scores à stocker en objet ?
 
+
 # configurable parameters
 nb_tries        = 8

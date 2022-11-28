@@ -1,7 +1,7 @@
 
 
 
-class Word():
+class Word:
     '''
     
     '''
@@ -14,24 +14,38 @@ class Word():
 
         self.word_len       = 0
 
-        pass
+        self.word_found     = False
 
-    def load_word(self):
+
+    def load_word(self, new_word):
         
-        
+        self.reset_word()
+
+        self.word_picked = new_word
 
         self.word_len = len(self.word_picked)
 
-        pass
+        for i in range (self.word_len):
+            self.word_to_guess += self.carac_to_guess
+
+
 
     def guess(self, letter):
         # protéger l'entrée ?
         # pas optimiser mais facile à lire
         if letter in self.word_picked :
 
+            tmp_word = ""
+
             for i in range(self.word_len) :
+
                 if letter == self.word_picked[i]:
-                    self.word_to_guess[i] = letter
+                    tmp_word += letter
+                else :
+                    tmp_word += self.word_to_guess[i]
+
+            self.word_to_guess = tmp_word
+
             return True
 
         else :
@@ -40,9 +54,9 @@ class Word():
             return False
 
     def reset_word(self):
-
-
-        pass
+        
+        self.tried_letters = []
+        self.word_to_guess = ""
 
     # @property
     # def 
