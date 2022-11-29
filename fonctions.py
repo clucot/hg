@@ -4,52 +4,60 @@ import pickle as pk
 
 class Word:
     """
-    Word class containing the word to guess
+    Word class is managing the word to be guessed by the user for hanging game purpose\n
+    It contains the clear_word to be guessed, the letters already tried by the user, the hiding character '*' and the word hidden by the '*'
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
 
-        self.__word_picked = ""
-        self._word_to_guess = ""
-        self.carac_to_guess = "*"
+        self.clear_word = ""
+        self._hidden_word = ""
+        self.hiding_char = "*"
         self._tried_letters = []
 
-        self.word_len = 0
+        self.word_length = 0
 
-    def load_word(self, new_word: str):
-        """Load a new word and fill the unknown one"""
-        self.__reset_word()
-
-        self.__word_picked = new_word
-
-        self.word_len = len(self.__word_picked)
-
-        # Fill the unknown word with *****
-        for i in range(self.word_len):
-            self._word_to_guess += self.carac_to_guess
-
-    def guess(self, letter: str):
+    def load_clear_word(self, new_word: str):
         """
-        Description
+        Load the new word to be guessed by the user in self.clear_word\n
+        Also, reset private attributes, save the word length in self.word_length and fill self._hidden_word with '*'
 
-        :param letter:
+        :param new_word: The new word to be guessed by the user
 
-        :return:
+        """
+        # Reset class attributes
+        self._reset_word()
+
+        # Load word and save length
+        self.clear_word = new_word
+        self.word_length = len(self.clear_word)
+
+        # Fill the _hidden_word with the exact number of '*'
+        for i in range(self.word_length):
+            self._hidden_word += self.hiding_char
+
+    def guess(self, letter: str) -> bool:
+        """
+        Guess method where the user try to guess clear_word by proposing a letter
+
+        :param letter: The letter tried by the user to guess the word
+
+        :return: True if letter is the word, False otherwise (bool)
         """
 
-        if letter in self.__word_picked:
+        if letter in self.clear_word:
 
-            tmp_word = ""
+            temporary_word = ""
 
-            # Rebuild the self._word_to_guess with * or found letter
-            for i in range(self.word_len):
+            # Rebuild the self._hidden_word with * or found letter
+            for i in range(self.word_length):
 
-                if letter == self.__word_picked[i]:
-                    tmp_word += letter
+                if letter == self.clear_word[i]:
+                    temporary_word += letter
                 else:
-                    tmp_word += self._word_to_guess[i]
+                    temporary_word += self._hidden_word[i]
 
-            self._word_to_guess = tmp_word
+            self._hidden_word = temporary_word
 
             return True
 
@@ -58,26 +66,30 @@ class Word:
             self._tried_letters.append(letter)
             return False
 
-    def is_word_found(self):
-        """Return True or False if the word has been discovered"""
-        if self._word_to_guess == self.__word_picked:
+    def is_word_found(self) -> bool:
+        """
+        Compare _hidden_word and clear_word to know if all letters have been discovered
+
+        :return: True if discovered, False otherwise (bool)
+        """
+        if self._hidden_word == self.clear_word:
             return True
         else:
             return False
 
-    def __reset_word(self):
+    def _reset_word(self) -> None:
         """
-        Reset
+        Reset private attributes _tried_letters and _hidden_word
         """
         self._tried_letters = []
-        self._word_to_guess = ""
+        self._hidden_word = ""
 
     @property
-    def word_to_guess(self):
-        return self._word_to_guess
+    def word_to_guess(self) -> str:
+        return self._hidden_word
 
     @property
-    def tried_letters(self):
+    def tried_letters(self) -> list:
         return self._tried_letters
 
 

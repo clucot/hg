@@ -33,7 +33,7 @@ while True:
 
     # Pick a random word in list and load Word object with it
     chosen_word = rd.choice(list_words)
-    myWord.load_word(chosen_word.lower())
+    myWord.load_clear_word(chosen_word.lower())
 
     # Loop until word is found or tries_left == 0
     tries_left = MAX_TRIES
