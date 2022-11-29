@@ -146,12 +146,12 @@ class ScoreManager:
             return 0
 
 
-def clear_prompt():
-
+def clear_prompt() -> None:
+    """Clear the prompt for windows, mac or linux"""
     # for windows
     if name == "nt":
-        _ = system("cls")
+        system("cls")
 
     # for mac and linux(here, os.name is 'posix')
     else:
-        _ = system("clear")
+        system("clear")
