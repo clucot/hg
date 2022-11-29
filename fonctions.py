@@ -30,8 +30,11 @@ class Word:
 
     def guess(self, letter: str):
         """
-        Propose a letter contained in the word
-        !!! Entry not protected !!!
+        Description
+
+        :param letter:
+
+        :return bool:
         """
 
         if letter in self.__word_picked:
