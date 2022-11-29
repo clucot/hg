@@ -1,4 +1,4 @@
-from os import system, name, path
+from os import system, name
 import pickle as pk
 
 
@@ -34,7 +34,7 @@ class Word:
 
         :param letter:
 
-        :return bool:
+        :return:
         """
 
         if letter in self.__word_picked:
@@ -100,33 +100,30 @@ class ScoreManager:
         """
         Check if the file exists or create it
         """
-        if path.exists(self.score_fp):
-            self.__handler_file = open(self.score_fp, "rb")
-        else:
-            self.__handler_file = open(self.score_fp, "wb")
-            pk.dump({"big boss": 999}, self.__handler_file)
+        try:
+            with open(self.score_fp, "rb") as self.__handler_file:
+                pass
 
-        self.__handler_file.close()
+        except FileNotFoundError:
+            with open(self.score_fp, "wb") as self.__handler_file:
+                # Have to fill a bit the file to make the pickle work
+                pk.dump({".": 0}, self.__handler_file)
 
-    def load_ranking(self):
+    def load_ranking(self) -> None:
         """
         Load ranking dictionary contained in score file
         """
-        self.__handler_file = open(self.score_fp, "rb")
+        with open(self.score_fp, "rb") as self.__handler_file:
 
-        self.dict_ranking = pk.load(self.__handler_file)
+            self.dict_ranking = pk.load(self.__handler_file)
 
-        self.__handler_file.close()
-
-    def save(self):
+    def save(self) -> None:
         """
         Save ranking dictionary into score file
         """
-        self.__handler_file = open(self.score_fp, "wb")
+        with open(self.score_fp, "wb") as self.__handler_file:
 
-        pk.dump(self.dict_ranking, self.__handler_file)
-
-        self.__handler_file.close()
+            pk.dump(self.dict_ranking, self.__handler_file)
 
     def update_ranking(self, username, score):
         """
