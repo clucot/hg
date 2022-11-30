@@ -85,7 +85,7 @@ class Word:
         self._hidden_word = ""
 
     @property
-    def word_to_guess(self) -> str:
+    def hidden_word(self) -> str:
         return self._hidden_word
 
     @property
