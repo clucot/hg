@@ -1,5 +1,6 @@
 from os import system, name
 import pickle as pk
+from enum import Enum
 
 
 class Word:
@@ -85,11 +86,17 @@ class Word:
         self._hidden_word = ""
 
     @property
-    def hidden_word(self) -> str:
+    def get_hidden_word(self) -> str:
+        """
+        :return: _hidden_word, the word to be displayed to the user (str)
+        """
         return self._hidden_word
 
     @property
-    def tried_letters(self) -> list:
+    def get_tried_letters(self) -> list:
+        """
+        :return: _tried_letters, the list of letters already tried by the user (list)
+        """
         return self._tried_letters
 
 
@@ -158,12 +165,23 @@ class ScoreManager:
             return 0
 
 
+class EnumOS(str, Enum):
+    """
+    os.name enumeration that allows os detection
+    """
+
+    WINDOWS = "nt"
+    LINUX_MAC = "posix"
+
+
 def clear_prompt() -> None:
     """Clear the prompt for windows, mac or linux"""
-    # for windows
-    if name == "nt":
+
+    if name == EnumOS.WINDOWS:
         system("cls")
 
-    # for mac and linux(here, os.name is 'posix')
-    else:
+    elif name == EnumOS.LINUX_MAC:
         system("clear")
+
+    else:
+        pass

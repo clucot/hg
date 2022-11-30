@@ -12,12 +12,12 @@ class HangingGame:
     Class HangingGame manage the hanging game process
     """
 
-    def __init__(self, score_file_path: str, max_tries_per_word=8) -> None:
+    def __init__(self, score_file_path: str, max_tries_per_word: int = 8) -> None:
         """
         :param score_file_path: File path of players score (will be created if it does not exist)
         :param max_tries_per_word: Number of fails allowed to user to guess the word, defaults to 8
         """
-        self.MAX_TRIES = max_tries_per_word
+        self.max_tries = max_tries_per_word
 
         self.blank_answer = ""
         self.user_name = ""
@@ -42,13 +42,13 @@ class HangingGame:
         Display information needed at each round : Hidden word, tries left, tried letters
         """
         clear_prompt()
-        print("Mot à deviner : " + self.word_obj.hidden_word)
+        print("Mot à deviner : " + self.word_obj.get_hidden_word)
         print(str(self.tries_left) + " coup(s) restant(s)")
 
         # Display letters already tried if list is not empty
-        if self.word_obj.tried_letters != []:
+        if self.word_obj.get_tried_letters != []:
             print("Lettres déjà jouées : ")
-            print(self.word_obj.tried_letters)
+            print(self.word_obj.get_tried_letters)
 
     def display_user_score(self) -> None:
         """
@@ -57,7 +57,6 @@ class HangingGame:
         """
         clear_prompt()
         self.user_score = self.sm_obj.get_score(self.user_name)
-        # self.sm_obj.update_ranking(self.user_name, self.user_score)
         print(self.user_name + ", votre score est de " + str(self.user_score))
         time.sleep(2)
 
@@ -140,7 +139,7 @@ class HangingGame:
             self.pick_a_word()
 
             # Run game until word is getting found or user goes out of tries
-            self.tries_left = self.MAX_TRIES
+            self.tries_left = self.max_tries
             while (not self.word_obj.is_word_found()) and (self.tries_left != 0):
 
                 self.display_game_state()

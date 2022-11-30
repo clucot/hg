@@ -1,5 +1,5 @@
 # files path
-dict_fp = "dict.txt"
+dict_fpath = "dict.txt"
 scores_fpath = "score.hgs"
 
 # list of words to guess
